@@ -1,0 +1,42 @@
+/users/HELP.md
+/users/.gradle
+/users/build/
+/users/!gradle/wrapper/gradle-wrapper.jar
+/users/!**/src/main/**/build/
+/users/!**/src/test/**/build/
+
+### STS ###
+/users/.apt_generated
+/users/.classpath
+/users/.factorypath
+/users/.project
+/users/.settings
+/users/.springBeans
+/users/.sts4-cache
+/users/bin/
+/users/!**/src/main/**/bin/
+/users/!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+/users/.idea
+/users/*.iws
+/users/*.iml
+/users/*.ipr
+/users/out/
+/users/!**/src/main/**/out/
+/users/!**/src/test/**/out/
+
+### NetBeans ###
+/users/nbproject/private/
+/users/nbbuild/
+/users/dist/
+/users/nbdist/
+/users/.nb-gradle/
+
+### VS Code ###
+/users/.vscode/
+
+### Kotlin ###
+/users/.kotlin
+
+/users/.env
