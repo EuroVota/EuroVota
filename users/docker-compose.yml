@@ -1,6 +1,7 @@
 services:
   users:
     image: users
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
