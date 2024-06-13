@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import software.amazon.awssdk.services.cognitoidentityprovider.model.CognitoIdentityProviderException
@@ -18,7 +19,7 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.CognitoIden
 @RestController
 class UserLoginController(private val userLoginUseCase: UserLoginUseCase, private val gson: Gson) {
 
-  @GetMapping("/login")
+  @PostMapping("/login")
   fun login(
     @RequestBody request: ValidateUserRequest
   ): ResponseEntity<String> {
