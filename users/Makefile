@@ -6,6 +6,7 @@ appName := users
 appPath := /home/ubuntu/${appName}
 
 install: createDir clean build upload dockerComposeBuild up
+deploy:  clean build upload down dockerComposeBuild up dockerImagesPrune ps
 
 clean:
 	@echo "--------------------"
@@ -36,13 +37,25 @@ upload:
 	@echo "Uploading..."
 	@echo "--------------------"
 	@scp ${jarPath} ${identity}:${appPath} && \
-		scp ./docker-compose.yml ${identity}:${appPath} && scp ./Dockerfile ${identity}:${appPath}
+		scp ./docker-compose.yml ${identity}:${appPath} && scp ./Dockerfile ${identity}:${appPath} && scp ./.env ${identity}:${appPath}
 
 up:
 	@echo "--------------------"
 	@echo "Starting..."
 	@echo "--------------------"
 	@ssh ${identity} "cd ${appPath} && docker-compose up -d"
+
+down:
+	@echo "--------------------"
+	@echo "Downing..."
+	@echo "--------------------"
+	@ssh ${identity} "cd ${appPath} && docker-compose down"
+
+dockerImagesPrune:
+	@echo "--------------------"
+	@echo "Docker prune..."
+	@echo "--------------------"
+	@ssh ${identity} "cd ${appPath} && docker image prune"
 
 dockerComposeBuild:
 	@echo "--------------------"

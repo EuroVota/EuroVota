@@ -36,10 +36,10 @@ class SessionCognitoRepository(private val cognitoClient: CognitoIdentityProvide
 
     // Obtain the tokens from the response
     val accessToken = authResult.accessToken()
-    val idToken = authResult.idToken()
     val refreshToken = authResult.refreshToken()
+    val idToken = authResult.idToken()
 
-    return TokenDTO(accessToken, idToken, refreshToken)
+    return TokenDTO(accessToken, refreshToken, idToken)
 
   }
 }

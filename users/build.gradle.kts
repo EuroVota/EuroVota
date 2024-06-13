@@ -31,6 +31,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("com.google.code.gson:gson:2.10")
+	implementation ("io.github.cdimascio:dotenv-java:3.0.0")
 
 
 	implementation("software.amazon.awssdk:sns:2.26.0")
