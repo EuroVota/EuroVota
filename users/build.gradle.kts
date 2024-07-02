@@ -37,6 +37,10 @@ dependencies {
 	implementation("software.amazon.awssdk:sns:2.26.0")
 	implementation("software.amazon.awssdk:cognitoidentityprovider:2.25.52")
 
+	implementation("com.auth0:java-jwt:4.4.0")
+	implementation("com.auth0:jwks-rsa:0.22.1")
+
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

@@ -1,5 +1,6 @@
 package com.team1.users.shared
 
+import com.auth0.jwt.JWTVerifier
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.team1.users.session.infrastructure.repository.SessionCognitoRepository
@@ -33,7 +34,7 @@ class DependencyInjectionConfig {
     .create()
 
   @Bean
-  fun userGetUseCase(userRepository: UserRepository): UserGetUseCase = UserGetUseCase(userRepository)
+  fun userGetUseCase(userRepository: UserRepository, jwtVerifier: JWTVerifier): UserGetUseCase = UserGetUseCase(userRepository, jwtVerifier)
 
   @Bean
   fun userCreateUserCase(userRepository: UserRepository) = UserCreateUseCase(userRepository)
