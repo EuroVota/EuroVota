@@ -41,6 +41,8 @@
 
 /users/.env
 
+.idea
+
 ### Terraform ###
 # Local .terraform directories
 **/.terraform/*
