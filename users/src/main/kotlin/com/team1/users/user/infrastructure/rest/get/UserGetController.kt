@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.RSAKeyProvider
 import com.google.gson.Gson
 import com.team1.users.user.application.UserGetUseCase
+import com.team1.users.user.application.exception.UnauthorizedException
 import com.team1.users.user.domain.*
 import com.team1.users.utils.AwsCognitoRSAKeyProvider
 import org.springframework.http.HttpHeaders
@@ -50,6 +51,10 @@ class UserGetController(private val userGetUseCase: UserGetUseCase, private val 
           .status(HttpStatus.CONFLICT)
           .body(exception.message)
 
+        is UnauthorizedException -> ResponseEntity
+          .status(HttpStatus.UNAUTHORIZED)
+          .body(exception.message)
+
         else -> ResponseEntity
           .internalServerError()
           .body(exception.message)
@@ -87,6 +92,10 @@ class UserGetController(private val userGetUseCase: UserGetUseCase, private val 
 
         is CognitoIdentityProviderException -> ResponseEntity
           .status(HttpStatus.CONFLICT)
+          .body(exception.message)
+
+        is UnauthorizedException -> ResponseEntity
+          .status(HttpStatus.UNAUTHORIZED)
           .body(exception.message)
 
         else -> ResponseEntity
