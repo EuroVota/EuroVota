@@ -1,4 +1,4 @@
-identity := users-ec2
+identity := app-2
 
 jarFile:= users-0.0.1-SNAPSHOT.jar
 jarPath := ./build/libs/${jarFile}

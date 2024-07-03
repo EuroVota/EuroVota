@@ -10,6 +10,6 @@ COPY .env .
 
 WORKDIR /app
 
-EXPOSE 8080
+EXPOSE 9000
 
 CMD ["java", "-jar", "users-0.0.1-SNAPSHOT.jar"]
