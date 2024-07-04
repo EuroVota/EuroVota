@@ -47,3 +47,7 @@ module "elb" {
 module "cognito" {
   source = "./modules/cognito"
 }
+
+module "dydb" {
+  source = "./modules/dydb"
+}
