@@ -7,7 +7,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "tf-remote-state20240626160633726200000001"
+# luis   bucket         = "tf-remote-state20240626160633726200000001"
+    bucket = "tf-remote-state20240704142158418300000001"
     key            = "my-vpc"
     dynamodb_table = "tf-remote-state-lock"
     region         = "us-east-1"
