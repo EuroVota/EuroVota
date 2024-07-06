@@ -1,0 +1,10 @@
+services:
+  votes:
+    image: 273440013219.dkr.ecr.us-east-1.amazonaws.com/votes:latest
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9002:9002"
+

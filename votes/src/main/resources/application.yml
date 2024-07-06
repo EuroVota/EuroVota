@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: votes
+
+server:
+  port: ${PORT:8080}
+
+app:
+  aws:
+    region: ${REGION:us-east-1}
+    cognito:
+      clientId: ${CLIENT_ID:client-id}
+      poolId: ${POOL_ID:pool-id}
+
+
+
+
+
+
