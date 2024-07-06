@@ -11,17 +11,18 @@ import java.util.function.Consumer
 class UsersApplication
 
 fun main(args: Array<String>) {
-	Dotenv.configure()
-		.directory("users")
-		.load()
-		.entries()
-		.forEach(
-		Consumer { entry: DotenvEntry ->
-			System.setProperty(
-				entry.key,
-				entry.value
-			)
-		}
-	)
-	runApplication<UsersApplication>(*args)
+  Dotenv
+    .configure()
+    .directory("users")
+    .load()
+    .entries()
+    .forEach(
+      Consumer { entry: DotenvEntry ->
+        System.setProperty(
+          entry.key,
+          entry.value
+        )
+      }
+    )
+  runApplication<UsersApplication>(*args)
 }
