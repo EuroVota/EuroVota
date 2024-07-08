@@ -36,6 +36,7 @@ dependencies {
 
 	implementation("software.amazon.awssdk:dynamodb")
 	implementation("software.amazon.awssdk:dynamodb-enhanced")
+	implementation("software.amazon.awssdk:secretsmanager")
 
 	implementation("com.googlecode.libphonenumber:libphonenumber:8.13.40")
 	implementation("com.googlecode.libphonenumber:geocoder:2.234")

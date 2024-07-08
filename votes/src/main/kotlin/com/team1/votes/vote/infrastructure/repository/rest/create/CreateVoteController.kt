@@ -1,6 +1,7 @@
 package com.team1.votes.vote.infrastructure.repository.rest.create
 
 
+import com.team1.votes.shared.SecretsUtils
 import com.team1.votes.shared.exception.UnauthorizedException
 import com.team1.votes.vote.application.VoteCreateUseCase
 import com.team1.votes.vote.application.exception.CountryInvalidException
@@ -19,7 +20,7 @@ import java.net.URI
 
 
 @RestController
-class PostCreateVoteController(private val voteCreateUseCase: VoteCreateUseCase) {
+class PostCreateVoteController(private val voteCreateUseCase: VoteCreateUseCase, private val secretsUtils: SecretsUtils) {
 
   @PostMapping("/votes")
   fun execute(
@@ -62,6 +63,11 @@ class PostCreateVoteController(private val voteCreateUseCase: VoteCreateUseCase)
       }
     }
 
+  }
+
+  @PostMapping("/test")
+  fun healthCheck(): ResponseEntity<Map<String, String>> {
+    return ResponseEntity.ok(secretsUtils.getSecrets())
   }
 
 }

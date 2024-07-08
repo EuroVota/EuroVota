@@ -3,14 +3,16 @@ spring:
     name: votes
 
 server:
-  port: ${PORT:8080}
+  port: 9002
 
 app:
   aws:
-    region: ${REGION:us-east-1}
+    region: us-east-1
     cognito:
-      clientId: ${CLIENT_ID:client-id}
-      poolId: ${POOL_ID:pool-id}
+      poolId: us-east-1_85qWTSXDm
+    secrets:
+      name: vote-app-secrets
+
 
 
 
