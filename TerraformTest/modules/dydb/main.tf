@@ -28,7 +28,7 @@ resource "aws_dynamodb_table" "eurovision_votes" {
 
   attribute {
     name = "timestamp"
-    type = "N"
+    type = "S"
   }
 
   global_secondary_index {

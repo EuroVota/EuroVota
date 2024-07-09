@@ -46,7 +46,7 @@ resource "aws_lb" "users-lb" {
   security_groups    = [aws_security_group.euro-vota-sg.id]
   subnets            = [for subnet_id in var.private_subnets_ids : subnet_id]
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 
 
   tags = {
