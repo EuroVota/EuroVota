@@ -22,9 +22,12 @@ class DataBaseConfig {
     .build()
 
   @Bean
-  fun userRepository(cognitoClient: CognitoIdentityProviderClient) = AwsCognitoRepository(cognitoClient)
+  fun userRepository(cognitoClient: CognitoIdentityProviderClient, secretsUtils: SecretsUtils) =
+    AwsCognitoRepository(cognitoClient, secretsUtils)
+
   @Bean
-  fun sessionUserRepository(cognitoClient: CognitoIdentityProviderClient) = SessionCognitoRepository(cognitoClient)
+  fun sessionUserRepository(cognitoClient: CognitoIdentityProviderClient, secretsUtils: SecretsUtils) =
+    SessionCognitoRepository(cognitoClient, secretsUtils)
 
 
 }

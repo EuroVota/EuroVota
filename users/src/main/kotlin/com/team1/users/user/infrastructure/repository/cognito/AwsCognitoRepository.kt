@@ -1,17 +1,20 @@
 package com.team1.users.user.infrastructure.repository.cognito
 
 import com.team1.users.session.infrastructure.repository.dto.TokenDTO
+import com.team1.users.shared.SecretsUtils
 import com.team1.users.user.domain.*
 import org.springframework.beans.factory.annotation.Value
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient
 import software.amazon.awssdk.services.cognitoidentityprovider.model.*
 import java.time.Instant
 
-class AwsCognitoRepository(private val cognitoClient: CognitoIdentityProviderClient) : UserRepository {
+class AwsCognitoRepository(
+  private val cognitoClient: CognitoIdentityProviderClient,
+  secretsUtils: SecretsUtils
+) : UserRepository {
 
 
-  @Value("\${app.aws.cognito.clientId}")
-  lateinit var clientId: String
+  private val clientId: String = secretsUtils.getSecrets()["CLIENT_ID"] ?: throw IllegalStateException("Client ID not found")
 
   @Value("\${app.aws.cognito.poolId}")
   lateinit var poolId: String

@@ -2,13 +2,7 @@ FROM  amazoncorretto:17.0.11-al2023-headless
 
 WORKDIR /app
 
-COPY users-0.0.1-SNAPSHOT.jar .
-
-WORKDIR /app/users
-
-COPY .env .
-
-WORKDIR /app
+COPY /build/libs/users-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 9000
 

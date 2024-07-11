@@ -35,7 +35,9 @@ dependencies {
 	implementation ("io.github.cdimascio:dotenv-java:3.0.0")
 
 
-	implementation("software.amazon.awssdk:sns:2.26.0")
+	implementation(platform("software.amazon.awssdk:bom:2.26.18"))
+	implementation("software.amazon.awssdk:secretsmanager")
+
 	implementation("software.amazon.awssdk:cognitoidentityprovider:2.25.52")
 
 	implementation("com.auth0:java-jwt:4.4.0")

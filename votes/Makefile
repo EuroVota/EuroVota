@@ -7,8 +7,11 @@ appName := votes
 appPath := /home/ubuntu/${appName}
 
 build:   clean build-app
-deploy:  build Build-DockerImage Tag-DockerImage login_aws Push-DockerImage uploadEnv login_aws_remote run ps logs
+deploy:  build Build-DockerImage Tag-DockerImage login_aws Push-DockerImage login_aws_remote run ps logs
 install: createDir deploy
+
+push-app:   build Build-DockerImage Tag-DockerImage login_aws Push-DockerImage
+
 
 login_aws:
 	@echo "--------------------"
@@ -65,11 +68,6 @@ createDir:
 	@echo "--------------------"
 	@ssh ${identity} "mkdir -p ${appPath}"
 
-uploadEnv:
-	@echo "--------------------"
-	@echo "Uploading..."
-	@echo "--------------------"
-	@scp ./.env ${identity}:${appPath}
 
 run:
 	@echo "--------------------"

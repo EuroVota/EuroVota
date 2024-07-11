@@ -10,23 +10,12 @@ import com.team1.users.user.application.UserLoginUseCase
 import com.team1.users.user.application.UserValidateUseCase
 import com.team1.users.user.domain.UserRepository
 import com.team1.users.utils.InstantTypeAdapter
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import software.amazon.awssdk.regions.Region
-import software.amazon.awssdk.services.sns.SnsClient
 import java.time.Instant
 
 @Configuration
 class DependencyInjectionConfig {
-
-  @Value("\${app.aws.region}")
-  lateinit var region: String
-
-  @Bean
-  fun snsClient(): SnsClient = SnsClient.builder()
-    .region(Region.of(region))
-    .build()
 
   @Bean
   fun gson(): Gson = GsonBuilder()
@@ -34,7 +23,8 @@ class DependencyInjectionConfig {
     .create()
 
   @Bean
-  fun userGetUseCase(userRepository: UserRepository, jwtVerifier: JWTVerifier): UserGetUseCase = UserGetUseCase(userRepository, jwtVerifier)
+  fun userGetUseCase(userRepository: UserRepository, jwtVerifier: JWTVerifier): UserGetUseCase =
+    UserGetUseCase(userRepository, jwtVerifier)
 
   @Bean
   fun userCreateUserCase(userRepository: UserRepository) = UserCreateUseCase(userRepository)

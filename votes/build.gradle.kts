@@ -32,7 +32,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-	implementation(platform("software.amazon.awssdk:bom:2.21.1"))
+	implementation(platform("software.amazon.awssdk:bom:2.26.18"))
 
 	implementation("software.amazon.awssdk:dynamodb")
 	implementation("software.amazon.awssdk:dynamodb-enhanced")
