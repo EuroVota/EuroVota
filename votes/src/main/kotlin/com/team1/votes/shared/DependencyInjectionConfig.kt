@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder
 import com.team1.users.utils.InstantTypeAdapter
+import com.team1.votes.vote.application.GetRankingUseCase
 import com.team1.votes.vote.application.VoteCreateUseCase
 import com.team1.votes.vote.domain.VoteRepository
 import org.springframework.beans.factory.annotation.Value
@@ -44,5 +45,15 @@ class DependencyInjectionConfig {
     geocoder,
     jwtVerifier
   )
+
+  @Bean
+  fun getRankingUseCase(
+    voteRepository: VoteRepository,
+    jwtVerifier: JWTVerifier
+  ): GetRankingUseCase = GetRankingUseCase(
+    voteRepository,
+    jwtVerifier
+  )
+
 
 }
