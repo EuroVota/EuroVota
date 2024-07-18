@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { RankingListSkeleton } from "./RankingListSkeleton";
 
 interface Participant {
   id: number;
@@ -17,10 +18,10 @@ export const RankingList: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get('http://localhost:5000/ranking');
+        const response = await axios.get("http://localhost:5000/ranking");
         setRanking(response.data);
       } catch (error) {
-        setError('Failed to load ranking. Please try again later.');
+        setError("Failed to load ranking. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -29,11 +30,15 @@ export const RankingList: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center">Loading...</div>;
+    return <RankingListSkeleton />;
   }
 
   if (error) {
-    return <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center text-red-500">{error}</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center text-red-500">
+        {error}
+      </div>
+    );
   }
 
   return (
@@ -42,7 +47,10 @@ export const RankingList: React.FC = () => {
         <h2 className="text-2xl font-bold mb-4 text-center">Ranking</h2>
         <ul className="space-y-4">
           {ranking.map((participant) => (
-            <li key={participant.id} className="p-4 bg-white bg-opacity-80 shadow rounded">
+            <li
+              key={participant.id}
+              className="p-4 bg-white bg-opacity-80 shadow rounded"
+            >
               {participant.name}: {participant.votes} votes
             </li>
           ))}
@@ -51,4 +59,3 @@ export const RankingList: React.FC = () => {
     </div>
   );
 };
-

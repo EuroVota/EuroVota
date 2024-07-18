@@ -1,67 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
-interface Participant {
-  id: number;
-  name: string;
-}
+import React from "react";
+import { Country } from "./Country";
+import { countries } from "../assets/ParticipantList";
 
 export const CountryList: React.FC = () => {
-  const [participants, setParticipants] = useState<Participant[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchParticipants = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get('http://localhost:5000/participants');
-        setParticipants(response.data);
-      } catch (error) {
-        setError('Failed to load participants. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchParticipants();
-  }, []);
-
-  const voteForParticipant = async (participantId: number) => {
-    const token = localStorage.getItem('token');
-    try {
-      await axios.post(`http://localhost:5000/vote/${participantId}`, {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    } catch (error) {
-      console.error('Failed to vote:', error);
-    }
-  };
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center text-red-500">{error}</div>;
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center">
-      <div className="container mx-auto">
-        <h2 className="text-2xl font-bold mb-4 text-center">Participants</h2>
-        <ul className="space-y-4">
-          {participants.map((participant) => (
-            <li key={participant.id} className="flex justify-between items-center p-4 bg-white bg-opacity-80 shadow rounded">
-              {participant.name}
-              <button
-                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
-                onClick={() => voteForParticipant(participant.id)}
-              >
-                Vote
-              </button>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="max-w-5xl mx-auto p-8">
+        <h1 className="text-2xl font-bold mb-4">List of Countries</h1>
+        <ul className="divide-y divide-gray-200">
+          {countries.map((participant) => (
+            <li key={participant.id} className="py-4">
+              <Country participant={participant} />
             </li>
           ))}
         </ul>
@@ -69,4 +18,3 @@ export const CountryList: React.FC = () => {
     </div>
   );
 };
-
