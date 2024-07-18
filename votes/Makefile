@@ -1,6 +1,6 @@
 identity := app-2-test
 
-aws_ecr_repo := 273440013219.dkr.ecr.us-east-1.amazonaws.com
+aws_ecr_repo := 926033837002.dkr.ecr.us-east-1.amazonaws.com
 jarFile := votes-0.0.1-SNAPSHOT.jar
 jarPath := ./build/libs/${jarFile}
 appName := votes
