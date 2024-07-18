@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 export const Header: React.FC = () => {
   return (
@@ -8,18 +8,22 @@ export const Header: React.FC = () => {
         <div className="text-white text-lg font-bold">Eurovision Voting</div>
         <ul className="flex space-x-4">
           <li>
-            <Link className="text-white hover:text-gray-300" to="/">Login</Link>
+            <Link className="text-white hover:text-gray-300" to="/">
+              Login
+            </Link>
           </li>
           <li>
-            <Link className="text-white hover:text-gray-300" to="/participants">Participants</Link>
+            <Link className="text-white hover:text-gray-300" to="/voting">
+              Voting
+            </Link>
           </li>
           <li>
-            <Link className="text-white hover:text-gray-300" to="/ranking">Ranking</Link>
+            <Link className="text-white hover:text-gray-300" to="/ranking">
+              Ranking
+            </Link>
           </li>
         </ul>
       </div>
     </nav>
   );
 };
-
-

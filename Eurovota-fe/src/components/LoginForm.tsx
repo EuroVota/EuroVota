@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
-interface LoginFormProps {
-  onLogin: (token: string) => void;
-}
-
-export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  const [username, setUsername] = useState("");
+import { useAuth } from "../contexts/AuthContext";
+export const LoginForm: React.FC = () => {
+  const { userId, username, login } = useAuth();
+  const [usernameInput, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  if (userId) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center">
+        <div>
+          <h1>You are already logged in as: {username}</h1>
+          <Link to="/">Go to Home</Link>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,9 +25,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     try {
       const response = await axios.post(
         "https://nz2ztrqis3.execute-api.us-east-1.amazonaws.com/eurovota-test/eurovota-api/login",
-        { username, password }
+        { usernameInput, password }
       );
-      onLogin(response.data.token);
+      const token = response.data.userId;
+      login(token, usernameInput);
     } catch (error) {
       setError("Login failed. Please check your credentials and try again.");
     }
@@ -40,7 +49,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             className="w-full px-3 py-2 border rounded"
             id="username"
             type="text"
-            value={username}
+            value={usernameInput}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
