@@ -8,4 +8,6 @@ interface VoteRepository {
 
   fun findByUserId(userId: UserId): List<Vote>
 
+  fun getVotes(): List<Vote>
+
 }

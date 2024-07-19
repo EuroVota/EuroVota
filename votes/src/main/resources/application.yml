@@ -9,7 +9,7 @@ app:
   aws:
     region: us-east-1
     cognito:
-      poolId: us-east-1_85qWTSXDm
+      poolId: us-east-1_So4E7bW9k
     secrets:
       name: vote-app-secrets
 

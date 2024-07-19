@@ -61,17 +61,30 @@ class DynamoDBVoteRepository(private val dynamoDbClient: DynamoDbClient) : VoteR
       .build()
 
     val response: ScanResponse = dynamoDbClient.scan(scanRequest)
-    val votes = response.items().map { item ->
-      Vote(
-        VoteId.fromString(item["id"]?.s() ?: ""),
-        UserId.fromString(item["userId"]?.s() ?: ""),
-        CountryName(item["countryName"]?.s() ?: ""),
-        Instant.parse(item["createdAt"]?.s()),
-        VoteValue(item["voteValue"]?.n()?.toInt() ?: 0)
-      )
-    }
+    val votes = response.items().map(::deserialize)
 
     return votes
 
+  }
+
+  private fun deserialize(item: Map<String, AttributeValue>): Vote {
+    return Vote(
+      VoteId.fromString(item["id"]?.s() ?: ""),
+      UserId.fromString(item["userId"]?.s() ?: ""),
+      CountryName(item["countryName"]?.s() ?: ""),
+      Instant.parse(item["createdAt"]?.s()),
+      VoteValue(item["voteValue"]?.n()?.toInt() ?: 0)
+    )
+  }
+
+  override fun getVotes(): List<Vote> {
+    val scanRequest = ScanRequest.builder()
+      .tableName("votes")
+      //.projectionExpression("countryName, voteValue")
+      .build()
+
+    val response = dynamoDbClient.scan(scanRequest)
+
+    return response.items().map(::deserialize)
   }
 }
