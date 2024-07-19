@@ -1,0 +1,23 @@
+[
+  {
+    "name": "users",
+    "image": "273440013219.dkr.ecr.us-east-1.amazonaws.com/users:latest",
+    "cpu": 0,
+    "portMappings": [
+      {
+        "name": "users-9000-tcp",
+        "containerPort": 9000,
+        "hostPort": 9000,
+        "protocol": "tcp",
+        "appProtocol": "http"
+      }
+    ],
+    "essential": true,
+    "environment": [],
+    "environmentFiles": [],
+    "mountPoints": [],
+    "volumesFrom": [],
+    "ulimits": [],
+    "systemControls": []
+  }
+]
