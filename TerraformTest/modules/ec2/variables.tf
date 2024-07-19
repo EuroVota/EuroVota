@@ -1,7 +1,7 @@
 variable "my-ip" {
   description = "Personal IP address"
   type        = string
-  default     = "85.57.39.131/32"
+  default     = "88.19.201.52/32"
 }
 variable "prefix" {
   description = "Prefix of the name of the created resources"

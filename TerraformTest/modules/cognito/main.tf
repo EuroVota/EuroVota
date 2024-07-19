@@ -12,7 +12,7 @@ resource "aws_cognito_user_pool" "users2" {
   tags                       = {}
   tags_all                   = {}
   username_attributes        = ["phone_number"]
-
+  
   account_recovery_setting {
     recovery_mechanism {
       name     = "verified_phone_number"
@@ -56,7 +56,7 @@ resource "aws_cognito_user_pool" "users2" {
 
   sms_configuration {
     external_id    = "test-external-id-x"
-    sns_caller_arn = "arn:aws:iam::273440013219:role/LabRole"
+    sns_caller_arn = "arn:aws:iam::259683775580:role/LabRole"
     sns_region     = "us-east-1"
   }
 
@@ -122,7 +122,8 @@ resource "aws_cognito_user_pool_client" "app_user" {
   ]
   refresh_token_validity       = 30
   supported_identity_providers = []
-  user_pool_id                 = "us-east-1_85qWTSXDm"
+  # user_pool_id                 = "us-east-1_85qWTSXDm"
+  user_pool_id = aws_cognito_user_pool.users2.id
   write_attributes = [
     "address",
     "birthdate",

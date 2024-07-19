@@ -1,6 +1,6 @@
 identity := app-2-test
 
-aws_ecr_repo := 273440013219.dkr.ecr.us-east-1.amazonaws.com
+aws_ecr_repo := 259683775580.dkr.ecr.us-east-1.amazonaws.com/eurovota
 jarFile:= users-0.0.1-SNAPSHOT.jar
 jarPath := ./build/libs/${jarFile}
 appName := users
