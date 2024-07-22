@@ -1,6 +1,7 @@
 identity := app-2-test
 
 aws_ecr_repo := 926033837002.dkr.ecr.us-east-1.amazonaws.com
+docker_hub_repo := luisgamezdvp
 jarFile := votes-0.0.1-SNAPSHOT.jar
 jarPath := ./build/libs/${jarFile}
 appName := votes
@@ -11,6 +12,9 @@ deploy:  build Build-DockerImage Tag-DockerImage login_aws Push-DockerImage logi
 install: createDir deploy
 
 push-app:   build Build-DockerImage Tag-DockerImage login_aws Push-DockerImage
+
+push-app-multi:   build login_aws Push-DockerImage-Multi
+
 
 
 login_aws:
@@ -48,6 +52,18 @@ Build-DockerImage:
 	@echo "Building Docker image..."
 	@echo "--------------------"
 	@docker build -t ${appName} .
+
+Push-DockerImage-Multi-to-Docker_Hub:
+	@echo "--------------------"
+	@echo "Building Docker image and pushing to Docker Hub..."
+	@echo "--------------------"
+	@docker buildx build --push -t ${docker_hub_repo}/${appName}:latest --platform linux/amd64,linux/arm64 .
+
+Push-DockerImage-Multi:
+	@echo "--------------------"
+	@echo "Building Docker image... amd64"
+	@echo "--------------------"
+	@docker buildx build --push -t ${aws_ecr_repo}/${appName}:multi --platform linux/amd64,linux/arm64 .
 
 Tag-DockerImage:
 	@echo "--------------------"

@@ -1,6 +1,7 @@
 identity := app-2-test
 
 aws_ecr_repo := 926033837002.dkr.ecr.us-east-1.amazonaws.com
+docker_hub_repo := luisgamezdvp
 jarFile:= users-0.0.1-SNAPSHOT.jar
 jarPath := ./build/libs/${jarFile}
 appName := users
@@ -11,6 +12,10 @@ deploy:  build Build-DockerImage Tag-DockerImage login_aws Push-DockerImage logi
 install: createDir deploy
 
 push-app:   build Build-DockerImage Tag-DockerImage login_aws Push-DockerImage
+push-app-amd64:   build Build-DockerImage-AMD64 Tag-DockerImage-AMD64 login_aws Push-DockerImage-AMD64
+
+push-app-multi:   build login_aws Push-DockerImage-Multi-to-AWS
+push-app-multi:   build login_aws Push-DockerImage-Multi-to-Docker_Hub
 
 
 login_aws:
@@ -55,6 +60,30 @@ Build-DockerImage:
 	@echo "--------------------"
 	@docker build -t ${appName} .
 
+Build-DockerImage-AMD64:
+	@echo "--------------------"
+	@echo "Building Docker image... amd64"
+	@echo "--------------------"
+	@docker buildx build -t ${appName}:amd64 --platform linux/amd64 .
+
+Push-DockerImage-Multi-to-Docker_Hub:
+	@echo "--------------------"
+	@echo "Building Docker image... amd64"
+	@echo "--------------------"
+	@docker buildx build --push -t ${docker_hub_repo}/${appName}:latest --platform linux/amd64,linux/arm64 .
+
+Push-DockerImage-Multi-to-AWS:
+	@echo "--------------------"
+	@echo "Building Docker image... amd64"
+	@echo "--------------------"
+	@docker buildx build --push -t ${aws_ecr_repo}/${appName}:multi --platform linux/amd64,linux/arm64 .
+
+Tag-DockerImage-AMD64:
+	@echo "--------------------"
+	@echo "Tagging Docker image... amd64"
+	@echo "--------------------"
+	@docker tag ${appName}:amd64 ${aws_ecr_repo}/${appName}:amd64
+
 Tag-DockerImage:
 	@echo "--------------------"
 	@echo "Tagging Docker image..."
@@ -66,6 +95,12 @@ Push-DockerImage:
 	@echo "Pushing Docker image to ECR..."
 	@echo "--------------------"
 	@docker push ${aws_ecr_repo}/${appName}:latest
+
+Push-DockerImage-AMD64:
+	@echo "--------------------"
+	@echo "Pushing Docker image to ECR..."
+	@echo "--------------------"
+	@docker push ${aws_ecr_repo}/${appName}:amd64
 
 upload:
 	@echo "--------------------"
