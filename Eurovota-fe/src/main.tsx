@@ -7,9 +7,11 @@ import { AuthProvider } from "./contexts/AuthContext";
 
 ReactDOM.render(
   <BrowserRouter>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <div className="bg-[#040241] min-h-screen">
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </div>
   </BrowserRouter>,
   document.getElementById("root")
 );

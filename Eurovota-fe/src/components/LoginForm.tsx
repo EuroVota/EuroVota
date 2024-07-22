@@ -24,7 +24,7 @@ export const LoginForm: React.FC = () => {
     setError(null);
     try {
       const response = await axios.post(
-        "https://nz2ztrqis3.execute-api.us-east-1.amazonaws.com/eurovota-test/eurovota-api/login",
+        "https://tekogg2e2a.execute-api.us-east-1.amazonaws.com/eurovota-test/eurovota-api/login",
         { usernameInput, password }
       );
       const token = response.data.userId;

@@ -1,28 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/background.css";
 
 export const Header: React.FC = () => {
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-heart p-8">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-lg font-bold">Eurovision Voting</div>
-        <ul className="flex space-x-4">
-          <li>
-            <Link className="text-white hover:text-gray-300" to="/">
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link className="text-white hover:text-gray-300" to="/voting">
-              Voting
-            </Link>
-          </li>
-          <li>
-            <Link className="text-white hover:text-gray-300" to="/ranking">
-              Ranking
-            </Link>
-          </li>
-        </ul>
+        <div className="flex items-center justify-center">
+          <h1 className="text-white text-2xl font-bold">Eurovision Voting</h1>
+        </div>
+        <div className="flex space-x-4">
+          <Link
+            to="/"
+            className="text-white hover:text-gray-300 px-4 py-2 border border-white rounded-full"
+          >
+            Login
+          </Link>
+          <Link
+            to="/voting"
+            className="text-white hover:text-gray-300 px-4 py-2 border border-white rounded-full"
+          >
+            Voting
+          </Link>
+          <Link
+            to="/ranking"
+            className="text-white hover:text-gray-300 px-4 py-2 border border-white rounded-full"
+          >
+            Ranking
+          </Link>
+        </div>
       </div>
     </nav>
   );

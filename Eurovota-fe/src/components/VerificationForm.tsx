@@ -14,8 +14,8 @@ export const VerificationForm: React.FC = () => {
     e.preventDefault();
     setError(null);
     try {
-      await axios.post(
-        "https://tekogg2e2a.execute-api.us-east-1.amazonaws.com/to-remove/eurovota-api/validate",
+      await axios.patch(
+        "https://tekogg2e2a.execute-api.us-east-1.amazonaws.com/eurovota-test/eurovota-api/users/validate",
         { phone, code }
       );
       navigate("/");

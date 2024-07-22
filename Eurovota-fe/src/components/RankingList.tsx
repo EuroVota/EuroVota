@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { RankingListSkeleton } from "./RankingListSkeleton";
+import { CountryRank } from "./CountryRank";
 
 interface Participant {
   id: number;
   name: string;
   votes: number;
 }
+const mockRanking: Participant[] = [
+  { id: 1, name: "Italy", votes: 250 },
+  { id: 2, name: "Spain", votes: 180 },
+  { id: 3, name: "France", votes: 165 },
+  { id: 4, name: "Germany", votes: 140 },
+  { id: 5, name: "United Kingdom", votes: 120 },
+];
 
 export const RankingList: React.FC = () => {
   const [ranking, setRanking] = useState<Participant[]>([]);
@@ -19,7 +27,8 @@ export const RankingList: React.FC = () => {
       setError(null);
       try {
         const response = await axios.get("http://localhost:5000/ranking");
-        setRanking(response.data);
+        setRanking(mockRanking);
+        // setRanking(response.data);
       } catch (error) {
         setError("Failed to load ranking. Please try again later.");
       } finally {
@@ -46,13 +55,8 @@ export const RankingList: React.FC = () => {
       <div className="container mx-auto">
         <h2 className="text-2xl font-bold mb-4 text-center">Ranking</h2>
         <ul className="space-y-4">
-          {ranking.map((participant) => (
-            <li
-              key={participant.id}
-              className="p-4 bg-white bg-opacity-80 shadow rounded"
-            >
-              {participant.name}: {participant.votes} votes
-            </li>
+          {ranking.map((participant, index) => (
+            <CountryRank participant={{ position: index, ...participant }} />
           ))}
         </ul>
       </div>

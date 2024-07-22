@@ -21,12 +21,16 @@ export const RegisterForm: React.FC = () => {
 
     try {
       await axios.post(
-        "https://tekogg2e2a.execute-api.us-east-1.amazonaws.com/eurovota-test/eurovota-api/users",
+        "https://tekogg2e2a.execute-api.us-east-1.amazonaws.com/eurovota-test/eurovota-api/users  ",
         { phone, password }
       );
       navigate("/verify", { state: { phone } });
-    } catch (error) {
-      setError("Registration failed. Please try again.");
+    } catch (error: any) {
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        navigate("/verify", { state: { phone } });
+      } else {
+        setError("Registration failed. Please try again.");
+      }
     }
   };
 

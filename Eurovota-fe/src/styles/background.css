@@ -1,0 +1,21 @@
+.bg-heart {
+  background-image: url(../assets/bg-heart-left.svg),
+    url(../assets/bg-heart-center.svg), url(../assets/test-bg.png);
+  background-repeat: no-repeat;
+  background-position: left, bottom left 15%, bottom right;
+  background-size: 32% 100%, 32% 140%, 47% 100%;
+  height: 100%;
+}
+
+.voting-page {
+  background-image: url(../assets/voting-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+.voting-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

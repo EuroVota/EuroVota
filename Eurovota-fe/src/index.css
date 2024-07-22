@@ -1,9 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-  @apply bg-side-bg bg-cover bg-center;
-}
 
 form {
   @apply w-full max-w-sm p-8 bg-white bg-opacity-80 shadow-md rounded;
