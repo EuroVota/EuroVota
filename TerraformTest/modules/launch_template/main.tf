@@ -14,7 +14,6 @@ data "aws_ami" "packer_ami" {
 resource "aws_launch_template" "users-launch-template-tf" {
 
   name = "users-launch-template-tf"
-  # image_id = var.ami_id
   image_id = data.aws_ami.packer_ami.id
   instance_type = "t4g.micro"
 
@@ -48,7 +47,6 @@ resource "aws_launch_template" "users-launch-template-tf" {
 resource "aws_launch_template" "votes-launch-template-tf" {
 
   name = "votes-launch-template-tf"
-  # image_id = var.ami_id
   image_id = data.aws_ami.packer_ami.id
   instance_type = "t4g.micro"
 

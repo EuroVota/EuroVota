@@ -5,7 +5,6 @@ module "vpc" {
 module "ec2" {
   source                = "./modules/ec2"
   vpc_id                = module.vpc.vpc_id
-  # instance_profile_name = module.iam.instance_profile_name
   instance_profile_name = "LabInstanceProfile"
   public_subnet_ip      = module.vpc.public_subnet_id
   private_subnets_ids   = module.vpc.private_subnets_ids
@@ -15,7 +14,6 @@ module "ec2" {
 module "elb" {
   source              = "./modules/elb"
   vpc_id              = module.vpc.vpc_id
-  # instance_id         = module.ec2.ec2_id
   private_subnets_ids = module.vpc.private_subnets_ids
 }
 
@@ -35,14 +33,8 @@ module "dydb" {
   source = "./modules/dydb"
 }
 
-# module "ami" {
-#   source = "./modules/ami"
-#   ec2_id = module.ec2.ec2_id
-# }
-
 module "launch_template" {
   source = "./modules/launch_template"
-  # ami_id = module.ami.ami_id
   users_sg_id = module.ec2.users_sg_id
   votes_sg_id = module.ec2.votes_sg_id
   instance_profile_name = "LabInstanceProfile"
