@@ -8,8 +8,8 @@ output "votes_sg_id" {
   value       = aws_security_group.votes-tf-sg.id
 }
 
-output "ec2_id" {
-  description = "The id of the instance."
-  value       = aws_instance.users-tf.id
-}
+# output "ec2_id" {
+#   description = "The id of the instance."
+#   value       = aws_instance.users-tf.id
+# }
 

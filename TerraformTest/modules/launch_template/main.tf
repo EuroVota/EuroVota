@@ -1,7 +1,21 @@
+data "aws_ami" "packer_ami" {
+  most_recent = true 
+  filter {
+    name = "tag:Name"
+    values = ["packer-ami"]
+  }
+    filter {
+    name = "tag:Environment"
+    values = ["packer"]
+  }
+  owners = ["self"]  
+}
+
 resource "aws_launch_template" "users-launch-template-tf" {
 
   name = "users-launch-template-tf"
-  image_id = var.ami_id
+  # image_id = var.ami_id
+  image_id = data.aws_ami.packer_ami.id
   instance_type = "t4g.micro"
 
   key_name = "users-key" 
@@ -21,7 +35,6 @@ resource "aws_launch_template" "users-launch-template-tf" {
   }
 
   tag_specifications {
-
     resource_type = "instance"
 
     tags = {
@@ -35,7 +48,8 @@ resource "aws_launch_template" "users-launch-template-tf" {
 resource "aws_launch_template" "votes-launch-template-tf" {
 
   name = "votes-launch-template-tf"
-  image_id = var.ami_id
+  # image_id = var.ami_id
+  image_id = data.aws_ami.packer_ami.id
   instance_type = "t4g.micro"
 
   key_name = "users-key" 

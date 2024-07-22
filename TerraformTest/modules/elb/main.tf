@@ -4,39 +4,16 @@ resource "aws_lb_target_group" "users-tg2" {
   protocol = "TCP"
   vpc_id   = var.vpc_id
 
-  # health_check {
-  #   interval = 30
-  #   port = "traffic port"
-  #   path = "/actuator/health"
-  #   timeout = 30
-  #   healthy_threshold = 3
-  #   unhealthy_threshold = 3
-  #   protocol = "HTTP"
-  # }
+  health_check {
+    interval = 30
+    port = "traffic-port"
+    path = "/actuator/health"
+    timeout = 10
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    protocol = "HTTP"
+  }
 }
-
-resource "aws_lb_target_group" "votes-tg2" {
-  name     = "${var.prefix}-votes-lb-tg-2${var.suffix}"
-  port     = 9002
-  protocol = "TCP"
-  vpc_id   = var.vpc_id
-
-  # health_check {
-  #   interval = 30
-  #   port = "traffic port"
-  #   path = "/actuator/health"
-  #   timeout = 30
-  #   healthy_threshold = 3
-  #   unhealthy_threshold = 3
-  #   protocol = "HTTP"
-  # }
-}
-
-# resource "aws_lb_target_group_attachment" "users-tg-attachment" {
-#   target_group_arn = aws_lb_target_group.users-tg2.arn
-#   target_id        = var.instance_id
-#   port             = 8080
-# }
 
 resource "aws_security_group" "euro-vota-sg" {
   name = "euro-vota-sg-${var.suffix}"
@@ -89,6 +66,23 @@ resource "aws_lb_listener" "users-lb-listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.users-tg2.arn
+  }
+}
+
+resource "aws_lb_target_group" "votes-tg2" {
+  name     = "${var.prefix}-votes-lb-tg-2${var.suffix}"
+  port     = 9002
+  protocol = "TCP"
+  vpc_id   = var.vpc_id
+
+  health_check {
+    interval = 30
+    port = "traffic-port"
+    path = "/actuator/health"
+    timeout = 10
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    protocol = "HTTP"
   }
 }
 

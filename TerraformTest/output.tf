@@ -8,15 +8,15 @@ output "sg_id" {
   value       = module.ec2.users_sg_id
 }
 
-output "ec2_id" {
-  description = "The ID of the EC2 instance"
-  value       = module.ec2.ec2_id
-}
+# output "ec2_id" {
+#   description = "The ID of the EC2 instance"
+#   value       = module.ec2.ec2_id
+# }
 
-output "elb_dns_name" {
-  description = "The DNS name of the ELB"
-  value       = module.elb.elb_dns_name
-}
+# output "elb_dns_name" {
+#   description = "The DNS name of the ELB"
+#   value       = module.elb.elb_dns_name
+# }
 
 # output "cognito_user_pool_id" {
 #   description = "The ID of the Cognito User Pool"

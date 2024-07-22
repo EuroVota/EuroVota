@@ -8,7 +8,8 @@ resource "aws_security_group" "bastion-tf-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.my-ip]
+    cidr_blocks = ["0.0.0.0/0"]
+    # cidr_blocks = [var.my-ip]
   }
 
   egress {
@@ -161,15 +162,15 @@ resource "aws_eip" "bastion_eip" {
 }
 
 
-resource "aws_instance" "users-tf" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t4g.micro"
-  subnet_id     = var.public_subnet_ip
-  vpc_security_group_ids = [aws_security_group.users-tf-sg.id]
-  key_name = aws_key_pair.users-key.key_name
-  iam_instance_profile = var.instance_profile_name
-  user_data = filebase64("${path.module}/installation.sh")
-  tags = {
-    Name = "${var.prefix}-users-${var.suffix}"
-  }
-}
+# resource "aws_instance" "users-tf" {
+#   ami           = data.aws_ami.amazon_linux.id
+#   instance_type = "t4g.micro"
+#   subnet_id     = var.public_subnet_ip
+#   vpc_security_group_ids = [aws_security_group.users-tf-sg.id]
+#   key_name = aws_key_pair.users-key.key_name
+#   iam_instance_profile = var.instance_profile_name
+#   user_data = filebase64("${path.module}/installation.sh")
+#   tags = {
+#     Name = "${var.prefix}-users-${var.suffix}"
+#   }
+# }

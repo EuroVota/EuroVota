@@ -1,11 +1,16 @@
-# output "elb_name" {
-#   description = "The name of the ELB"
-#   value       = aws_lb_target_group.users-tg2.name
-# }
-
 output "users_tg_arn" {
   description = "The ARN of the users target group."
   value       = aws_lb_target_group.users-tg2.arn
+}
+
+output "users_nlb_arn" {
+  description = "The ARN of the users NLB"
+  value = aws_lb.users-lb.arn
+}
+
+output "users_dns_name" {
+  description = "The DNS name of the users NLB"
+  value       = aws_lb.users-lb.dns_name
 }
 
 output "votes_tg_arn" {
@@ -13,15 +18,16 @@ output "votes_tg_arn" {
   value       = aws_lb_target_group.votes-tg2.arn
 }
 
-# output "elb_name" {
-#   description = "The name of the ELB"
-#   value       = aws_lb.users-lb.name
-# }
+output "votes_nlb_arn" {
+  description = "The ARN of the votes NLB"
+  value = aws_lb.votes-lb.arn
+}
 
-# output "elb_arn" {
-#   description = "The ARN of the ELB"
-#   value       = aws_lb.users-lb.arn
-# }
+output "votes_dns_name" {
+  description = "The DNS name of the votes NLB"
+  value       = aws_lb.votes-lb.dns_name
+}
+
 
 output "elb_id" {
   description = "The ARN of the ELB"
@@ -33,7 +39,3 @@ output "elb_security_group_id" {
   value       = aws_security_group.euro-vota-sg.id
 }
 
-output "elb_dns_name" {
-  description = "The DNS name of the ELB"
-  value       = aws_lb.users-lb.dns_name
-}

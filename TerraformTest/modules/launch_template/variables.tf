@@ -9,10 +9,10 @@ variable "suffix" {
   default     = "tf"
 }
 
-variable "ami_id" {
-  description = "The id of the ami"
-  type        = string
-}
+# variable "ami_id" {
+#   description = "The id of the ami"
+#   type        = string
+# }
 
 variable "users_sg_id" {
   description = "The id of the users security group"
