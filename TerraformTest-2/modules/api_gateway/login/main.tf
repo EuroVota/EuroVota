@@ -77,7 +77,9 @@ resource "aws_api_gateway_method_response" "login_response_200" {
   }
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = false
+    "method.response.header.Access-Control-Allow-Origin" = false,
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true
   }
 
 }
@@ -92,7 +94,9 @@ resource "aws_api_gateway_integration_response" "login_integration_response_200"
   status_code = aws_api_gateway_method_response.login_response_200.status_code
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'",
+    "method.response.header.Access-Control-Allow-Methods" = "'POST'"
   }
 }
 
@@ -106,6 +110,12 @@ resource "aws_api_gateway_method_response" "login_response_400" {
     "application/json" : "Empty"
   }
 
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = true,
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true
+  }
+
 }
 
 resource "aws_api_gateway_integration_response" "login_integration_response_400" {
@@ -117,6 +127,12 @@ resource "aws_api_gateway_integration_response" "login_integration_response_400"
   rest_api_id = var.rest_api_id
   status_code = aws_api_gateway_method_response.login_response_400.status_code
   selection_pattern = "4\\d{2}"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'",
+    "method.response.header.Access-Control-Allow-Methods" = "'POST'"
+  }
 }
 
 

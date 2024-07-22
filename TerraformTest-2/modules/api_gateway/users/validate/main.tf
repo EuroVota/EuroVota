@@ -5,6 +5,14 @@ resource "aws_api_gateway_resource" "eurovota_api_validate" {
 
 }
 
+module "cors" {
+  source = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+
+  api_id = var.rest_api_id
+  api_resource_id = aws_api_gateway_resource.eurovota_api_validate.id
+}
+
 # Crear el modelo de solicitud
 resource "aws_api_gateway_model" "validate_model" {
   rest_api_id  = var.rest_api_id
@@ -70,7 +78,9 @@ resource "aws_api_gateway_method_response" "validate_response_200" {
 
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" : false
+    "method.response.header.Access-Control-Allow-Origin"  = false,
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
   }
 
 }
@@ -84,7 +94,9 @@ resource "aws_api_gateway_integration_response" "validate_integration_response_2
   rest_api_id = var.rest_api_id
   status_code = aws_api_gateway_method_response.validate_response_200.status_code
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" : "'*'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'",
+    "method.response.header.Access-Control-Allow-Methods" = "'PATCH'",
   }
 }
 
@@ -98,6 +110,12 @@ resource "aws_api_gateway_method_response" "registry_response_400" {
     "application/json" : "Empty"
   }
 
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = false,
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+  }
+
 }
 
 resource "aws_api_gateway_integration_response" "validate_integration_response_400" {
@@ -109,61 +127,12 @@ resource "aws_api_gateway_integration_response" "validate_integration_response_4
   rest_api_id = var.rest_api_id
   status_code = aws_api_gateway_method_response.registry_response_400.status_code
   selection_pattern = "4\\d{2}"
-}
-resource "aws_api_gateway_method" "validate_options_method" {
-  authorization = "NONE"
-  http_method   = "OPTIONS"
-  resource_id   = aws_api_gateway_resource.eurovota_api_validate.id
-  rest_api_id   = var.rest_api_id
-
-}
-
-resource "aws_api_gateway_integration" "validate_options_integration" {
-  rest_api_id = var.rest_api_id
-  resource_id = aws_api_gateway_resource.eurovota_api_validate.id
-  http_method = aws_api_gateway_method.validate_options_method.http_method
-
-  type                 = "MOCK"
-  passthrough_behavior = "WHEN_NO_MATCH"
-
-  connection_type = "INTERNET"
-
-  request_templates = {
-    "application/json" : "{\"statusCode\": 200}"
-  }
-}
-
-resource "aws_api_gateway_integration_response" "validate_options_integration_response_200" {
-  http_method = aws_api_gateway_method.validate_options_method.http_method
-  resource_id = aws_api_gateway_resource.eurovota_api_validate.id
-  response_templates = {
-    "application/json" : ""
-  }
-  rest_api_id = var.rest_api_id
-  status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" : "'OPTIONS'",
-    "method.response.header.Access-Control-Allow-Origin" : "'*'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'",
+    "method.response.header.Access-Control-Allow-Methods" = "'PATCH'",
   }
-}
-
-resource "aws_api_gateway_method_response" "validate_options_response_200" {
-
-  http_method = aws_api_gateway_method.validate_options_method.http_method
-  resource_id = aws_api_gateway_resource.eurovota_api_validate.id
-  rest_api_id = var.rest_api_id
-  status_code = "200"
-  response_models = {
-    "application/json" : "Empty"
-  }
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" : false,
-    "method.response.header.Access-Control-Allow-Methods" : false,
-    "method.response.header.Access-Control-Allow-Origin" : false
-  }
-
 }
 
 
