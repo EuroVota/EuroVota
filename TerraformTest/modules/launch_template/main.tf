@@ -75,5 +75,5 @@ resource "aws_launch_template" "votes-launch-template-tf" {
     }
   }
 
-  # user_data = filebase64("${path.module}/connect_ecr.sh")
+  user_data = filebase64("${path.module}/votes.sh")
 }

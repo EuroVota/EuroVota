@@ -51,13 +51,13 @@ resource "aws_api_gateway_integration" "registry_integration" {
   http_method = aws_api_gateway_method.register_method.http_method
 
   type                    = "HTTP"
-  uri                     = "${var.protocol_type}${var.users_nlb_dns}/${var.resource_path}"
+  uri                     = "${var.protocol_type}${var.nlb_dns}/${var.resource_path}"
   integration_http_method = "POST"
   passthrough_behavior    = "WHEN_NO_TEMPLATES"
   content_handling        = "CONVERT_TO_TEXT"
 
   connection_type = "VPC_LINK"
-  connection_id   = var.eurovota_users_vpc_link
+  connection_id   = var.eurovota_vpc_link
 }
 
 resource "aws_api_gateway_method_response" "registry_response_200" {

@@ -49,13 +49,13 @@ resource "aws_api_gateway_integration" "validate_integration" {
   http_method = aws_api_gateway_method.validate_method.http_method
 
   type                    = "HTTP"
-  uri                     = "${var.protocol_type}${var.users_nlb_dns}/${var.resource_path}/${aws_api_gateway_resource.eurovota_api_validate.path_part}"
+  uri                     = "${var.protocol_type}${var.nlb_dns}/${var.resource_path}/${aws_api_gateway_resource.eurovota_api_validate.path_part}"
   integration_http_method = "PATCH"
   passthrough_behavior    = "WHEN_NO_TEMPLATES"
   content_handling        = "CONVERT_TO_TEXT"
 
   connection_type = "VPC_LINK"
-  connection_id   = var.eurovota_users_vpc_link
+  connection_id   = var.eurovota_vpc_link
 }
 
 resource "aws_api_gateway_method_response" "validate_response_200" {

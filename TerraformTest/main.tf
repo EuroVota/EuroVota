@@ -51,9 +51,7 @@ module "asg" {
 
 module "api_gateway" {
   source = "./modules/api_gateway"
-  users_nlb_arn = module.elb.users_nlb_arn
-  users_nlb_dns = module.elb.users_dns_name
+  nlb_arn = module.elb.nlb_arn
+  nlb_dns = module.elb.dns_name
   user_pool_arn = module.cognito.pool_arn
-  votes_nlb_arn = module.elb.votes_nlb_arn
-  votes_nlb_dns = module.elb.votes_dns_name
 }

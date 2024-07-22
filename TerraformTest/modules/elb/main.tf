@@ -15,6 +15,23 @@ resource "aws_lb_target_group" "users-tg2" {
   }
 }
 
+resource "aws_lb_target_group" "votes-tg2" {
+  name     = "${var.prefix}-votes-lb-tg-2${var.suffix}"
+  port     = 9002
+  protocol = "TCP"
+  vpc_id   = var.vpc_id
+
+  health_check {
+    interval = 30
+    port = "traffic-port"
+    path = "/actuator/health"
+    timeout = 10
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    protocol = "HTTP"
+  }
+}
+
 resource "aws_security_group" "euro-vota-sg" {
   name = "euro-vota-sg-${var.suffix}"
   description = "SG Euro vota for ELB"
@@ -43,8 +60,8 @@ resource "aws_security_group" "euro-vota-sg" {
   }
 }
 
-resource "aws_lb" "users-lb" {
-  name               = "${var.prefix}-users-lb-${var.suffix}"
+resource "aws_lb" "nlb" {
+  name               = "${var.prefix}-nlb-${var.suffix}"
   internal           = true
   load_balancer_type = "network"
   security_groups    = [aws_security_group.euro-vota-sg.id]
@@ -54,12 +71,12 @@ resource "aws_lb" "users-lb" {
 
 
   tags = {
-    Name = "${var.prefix}-users-lb-${var.suffix}"
+    Name = "${var.prefix}-nlb-${var.suffix}"
   }
 }
 
-resource "aws_lb_listener" "users-lb-listener" {
-  load_balancer_arn = aws_lb.users-lb.arn
+resource "aws_lb_listener" "lb-listener" {
+  load_balancer_arn = aws_lb.nlb.arn
   port              = "80"
   protocol          = "TCP"
 
@@ -69,45 +86,58 @@ resource "aws_lb_listener" "users-lb-listener" {
   }
 }
 
-resource "aws_lb_target_group" "votes-tg2" {
-  name     = "${var.prefix}-votes-lb-tg-2${var.suffix}"
-  port     = 9002
-  protocol = "TCP"
-  vpc_id   = var.vpc_id
+resource "aws_lb_listener_rule" "users_rule" {
+  listener_arn = aws_lb_listener.lb-listener.arn
+  priority = 100
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.users-tg2.arn
+  }
 
-  health_check {
-    interval = 30
-    port = "traffic-port"
-    path = "/actuator/health"
-    timeout = 10
-    healthy_threshold = 3
-    unhealthy_threshold = 3
-    protocol = "HTTP"
+  condition {
+    path_pattern {
+      values = ["/users*", "/login*"]
+    }
   }
 }
 
-resource "aws_lb" "votes-lb" {
-  name               = "${var.prefix}-votes-lb-${var.suffix}"
-  internal           = true
-  load_balancer_type = "network"
-  security_groups    = [aws_security_group.euro-vota-sg.id]
-  subnets            = [for subnet_id in var.private_subnets_ids : subnet_id]
-
-  enable_deletion_protection = false
-
-
-  tags = {
-    Name = "${var.prefix}-votes-lb-${var.suffix}"
-  }
-}
-
-resource "aws_lb_listener" "votes-lb-listener" {
-  load_balancer_arn = aws_lb.votes-lb.arn
-  port              = "80"
-  protocol          = "TCP"
-
-  default_action {
-    type             = "forward"
+resource "aws_lb_listener_rule" "votes_rule" {
+  listener_arn = aws_lb_listener.lb-listener.arn
+  priority = 200
+  action {
+    type = "forward"
     target_group_arn = aws_lb_target_group.votes-tg2.arn
   }
+
+  condition {
+    path_pattern {
+      values = ["/votes*"]
+    }
+  }
 }
+
+# resource "aws_lb" "votes-lb" {
+#   name               = "${var.prefix}-votes-lb-${var.suffix}"
+#   internal           = true
+#   load_balancer_type = "network"
+#   security_groups    = [aws_security_group.euro-vota-sg.id]
+#   subnets            = [for subnet_id in var.private_subnets_ids : subnet_id]
+
+#   enable_deletion_protection = false
+
+
+#   tags = {
+#     Name = "${var.prefix}-votes-lb-${var.suffix}"
+#   }
+# }
+
+# resource "aws_lb_listener" "votes-lb-listener" {
+#   load_balancer_arn = aws_lb.votes-lb.arn
+#   port              = "80"
+#   protocol          = "TCP"
+
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.votes-tg2.arn
+#   }
+# }

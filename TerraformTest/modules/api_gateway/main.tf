@@ -8,14 +8,9 @@ resource "aws_api_gateway_resource" "eurovota_api_root" {
   rest_api_id = aws_api_gateway_rest_api.eurovota_api.id
 }
 
-resource "aws_api_gateway_vpc_link" "eurovota_users_vpc_link" {
-  name        = "eurovota-users-vpc-link"
-  target_arns = [var.users_nlb_arn]
-}
-
-resource "aws_api_gateway_vpc_link" "eurovota_votes_vpc_link" {
-  name        = "eurovota-votes-vpc-link"
-  target_arns = [var.votes_nlb_arn]
+resource "aws_api_gateway_vpc_link" "eurovota_vpc_link" {
+  name        = "eurovota-vpc-link"
+  target_arns = [var.nlb_arn]
 }
 
 module "auth" {
@@ -29,8 +24,8 @@ module "login" {
   parent_id               = aws_api_gateway_resource.eurovota_api_root.id
   rest_api_id             = aws_api_gateway_rest_api.eurovota_api.id
   protocol_type           = var.protocol_type
-  users_nlb_dns           = var.users_nlb_dns
-  eurovota_users_vpc_link = aws_api_gateway_vpc_link.eurovota_users_vpc_link.id
+  nlb_dns                 = var.nlb_dns
+  eurovota_vpc_link       = aws_api_gateway_vpc_link.eurovota_vpc_link.id
 }
 
 module "users" {
@@ -38,8 +33,8 @@ module "users" {
   parent_id               = aws_api_gateway_resource.eurovota_api_root.id
   rest_api_id             = aws_api_gateway_rest_api.eurovota_api.id
   protocol_type           = var.protocol_type
-  users_nlb_dns           = var.users_nlb_dns
-  eurovota_users_vpc_link = aws_api_gateway_vpc_link.eurovota_users_vpc_link.id
+  nlb_dns                 = var.nlb_dns
+  eurovota_vpc_link       = aws_api_gateway_vpc_link.eurovota_vpc_link.id
   authorizer_id           = module.auth.authorizer_id
 
 }
@@ -57,8 +52,8 @@ module "votes" {
   parent_id               = aws_api_gateway_resource.eurovota_api_root.id
   rest_api_id             = aws_api_gateway_rest_api.eurovota_api.id
   protocol_type           = var.protocol_type
-  votes_nlb_dns           = var.votes_nlb_dns
-  eurovota_votes_vpc_link = aws_api_gateway_vpc_link.eurovota_votes_vpc_link.id
+  nlb_dns                 = var.nlb_dns
+  eurovota_vpc_link       = aws_api_gateway_vpc_link.eurovota_vpc_link.id
   authorizer_id           = module.auth.authorizer_id
 }
 

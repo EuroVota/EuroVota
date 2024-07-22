@@ -10,12 +10,12 @@ variable "protocol_type" {
   default     = "http://"
 }
 
-variable "votes_nlb_dns" {
-  description = "The DNS name of the votes NLB"
+variable "nlb_dns" {
+  description = "The DNS name of the NLB"
 }
 
-variable "eurovota_votes_vpc_link" {
-  description = "The VPC link for the votes NLB"
+variable "eurovota_vpc_link" {
+  description = "The VPC link for the NLB"
 }
 
 variable "authorizer_id" {

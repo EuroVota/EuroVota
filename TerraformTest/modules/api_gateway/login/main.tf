@@ -57,13 +57,13 @@ resource "aws_api_gateway_integration" "login_integration" {
   http_method = aws_api_gateway_method.login_method.http_method
 
   type                    = "HTTP"
-  uri                     = "${var.protocol_type}${var.users_nlb_dns}/${aws_api_gateway_resource.eurovota_api_login.path_part}"
+  uri                     = "${var.protocol_type}${var.nlb_dns}/${aws_api_gateway_resource.eurovota_api_login.path_part}"
   integration_http_method = "POST"
   passthrough_behavior    = "WHEN_NO_TEMPLATES"
   content_handling        = "CONVERT_TO_TEXT"
 
   connection_type = "VPC_LINK"
-  connection_id   = var.eurovota_users_vpc_link
+  connection_id   = var.eurovota_vpc_link
 }
 
 resource "aws_api_gateway_method_response" "login_response_200" {

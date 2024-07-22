@@ -51,13 +51,13 @@ resource "aws_api_gateway_integration" "vote_integration" {
   http_method = aws_api_gateway_method.vote_method.http_method
 
   type                    = "HTTP"
-  uri                     = "${var.protocol_type}${var.votes_nlb_dns}/${aws_api_gateway_resource.eurovota_api_votes.path_part}"
+  uri                     = "${var.protocol_type}${var.nlb_dns}/${aws_api_gateway_resource.eurovota_api_votes.path_part}"
   integration_http_method = "POST"
   passthrough_behavior    = "WHEN_NO_TEMPLATES"
   content_handling        = "CONVERT_TO_TEXT"
 
   connection_type = "VPC_LINK"
-  connection_id   = var.eurovota_votes_vpc_link
+  connection_id   = var.eurovota_vpc_link
 
   cache_key_parameters = [
     "integration.request.header.Authorization",
@@ -144,13 +144,13 @@ resource "aws_api_gateway_integration" "vote_get_integration" {
   http_method = aws_api_gateway_method.vote_get_method.http_method
 
   type                    = "HTTP"
-  uri                     = "${var.protocol_type}${var.votes_nlb_dns}/${aws_api_gateway_resource.eurovota_api_votes.path_part}"
+  uri                     = "${var.protocol_type}${var.nlb_dns}/${aws_api_gateway_resource.eurovota_api_votes.path_part}"
   integration_http_method = "GET"
   passthrough_behavior    = "WHEN_NO_TEMPLATES"
   content_handling        = "CONVERT_TO_TEXT"
 
   connection_type = "VPC_LINK"
-  connection_id   = var.eurovota_votes_vpc_link
+  connection_id   = var.eurovota_vpc_link
 
   cache_key_parameters = [
     "integration.request.header.Authorization",
