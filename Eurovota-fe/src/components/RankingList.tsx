@@ -80,7 +80,7 @@ export const RankingList: React.FC = () => {
               <CountryRank
                 key={participant.name}
                 participant={{
-                  position: index,
+                  position: index + 1,
                   ...participant,
                   code: country?.code,
                   songId: country?.songId,
