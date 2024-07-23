@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 
-interface AuthContextProps {
+export interface AuthContextProps {
   idToken: string | null;
   username: string | null;
   login: (idToken: string, username: string) => void;
