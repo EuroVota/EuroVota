@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 interface CountryProps {
   participant: {
@@ -12,16 +13,34 @@ interface CountryProps {
 
 export const Country: React.FC<CountryProps> = ({ participant }) => {
   const apiBaseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+  const { idToken } = useAuth();
 
   const handleVote = async (country: string) => {
     try {
-      const response = await axios.post(`${apiBaseUrl}/votes`, {
-        country,
-        votes: 10,
-      });
+      const response = await axios.post(
+        `${apiBaseUrl}/votes`,
+        {
+          countryName: country,
+          voteValue: 10,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        }
+      );
+
       console.log("Vote submitted successfully:", response.data);
     } catch (error) {
-      console.error("Error submitting vote:", error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          if (error.response.status === 409) {
+            alert("You have already voted 5 times");
+          } else {
+            console.error("Unexpected Error:", error);
+          }
+        }
+      }
     }
   };
 
@@ -38,17 +57,19 @@ export const Country: React.FC<CountryProps> = ({ participant }) => {
         <div className="flex-grow ml-4">
           <h1 className="text-4xl font-bold mb-4">{participant.country}</h1>
         </div>
-        <button
-          onClick={() => handleVote(participant.country)}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
-        >
-          Vote
-        </button>
+        {idToken ? (
+          <button
+            onClick={() => handleVote(participant.country)}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+          >
+            Vote
+          </button>
+        ) : null}
       </div>
       <div className="bg-gray-800 mt-4 rounded-lg overflow-hidden">
         <iframe
           title={`${participant.country} Spotify Song`}
-          // src={`https://open.spotify.com/embed/track/${participant.songId}?utm_source=generator`}
+          src={`https://open.spotify.com/embed/track/${participant.songId}?utm_source=generator`}
           width="100%"
           height="352"
           frameBorder="0"

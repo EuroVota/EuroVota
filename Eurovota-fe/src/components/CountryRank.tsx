@@ -1,7 +1,6 @@
 import React from "react";
 
 interface Participant {
-  id: number;
   position: number;
   name: string;
   votes: number;
@@ -18,12 +17,12 @@ export const CountryRank: React.FC<{ participant: Participant }> = ({
         #{participant.position}
       </div>
       <iframe
-        // src={`https://open.spotify.com/embed/track/${participant.songId}?utm_source=generator&theme=0`}
+        src={`https://open.spotify.com/embed/track/${participant.songId}?utm_source=generator&theme=0`}
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
         style={{
           borderRadius: "12px",
-          width: 1200,
+          width: 1180,
           background: "black",
           height: 152,
         }}

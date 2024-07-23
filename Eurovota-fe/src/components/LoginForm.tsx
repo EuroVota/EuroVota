@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 export const LoginForm: React.FC = () => {
   const apiBaseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
-  const { userId, username, login } = useAuth();
+  const { idToken: userId, username, login } = useAuth();
   const [usernameInput, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -25,12 +25,16 @@ export const LoginForm: React.FC = () => {
     e.preventDefault();
     setError(null);
     try {
+      console.log(usernameInput);
       const response = await axios.post(`${apiBaseUrl}/login`, {
-        usernameInput,
+        phone: usernameInput,
         password,
       });
-      const token = response.data.userId;
-      login(token, usernameInput);
+
+      const { idToken } = response.data;
+      console.log("Data", response);
+      console.log("Set Token to", idToken);
+      login(idToken, usernameInput);
     } catch (error) {
       setError("Login failed. Please check your credentials and try again.");
     }
