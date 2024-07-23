@@ -17,7 +17,7 @@ const mockRanking: Participant[] = [
 ];
 
 export const RankingList: React.FC = () => {
-  // const apiBaseUrl = import.meta.env.REACT_APP_API_BASE_URL;
+  // const apiBaseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
   const [ranking, setRanking] = useState<Participant[]>([]);
   const [loading, setLoading] = useState(true);

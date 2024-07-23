@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const RegisterForm: React.FC = () => {
-  const apiBaseUrl = import.meta.env.REACT_APP_API_BASE_URL;
+  const apiBaseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");

@@ -11,7 +11,7 @@ interface CountryProps {
 }
 
 export const Country: React.FC<CountryProps> = ({ participant }) => {
-  const apiBaseUrl = import.meta.env.REACT_APP_API_BASE_URL;
+  const apiBaseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
   const handleVote = async (country: string) => {
     try {
