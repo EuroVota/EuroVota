@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 export const LoginForm: React.FC = () => {
   const apiBaseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+  const navigate = useNavigate();
 
   const { idToken: userId, username, login } = useAuth();
   const [usernameInput, setUsername] = useState("");
@@ -35,6 +36,7 @@ export const LoginForm: React.FC = () => {
       console.log("Data", response);
       console.log("Set Token to", idToken);
       login(idToken, usernameInput);
+      navigate("/");
     } catch (error) {
       setError("Login failed. Please check your credentials and try again.");
     }
