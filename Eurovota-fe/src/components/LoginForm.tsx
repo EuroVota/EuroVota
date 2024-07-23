@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 export const LoginForm: React.FC = () => {
+  const apiBaseUrl = import.meta.env.REACT_APP_API_BASE_URL;
+
   const { userId, username, login } = useAuth();
   const [usernameInput, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,10 +25,10 @@ export const LoginForm: React.FC = () => {
     e.preventDefault();
     setError(null);
     try {
-      const response = await axios.post(
-        "https://tekogg2e2a.execute-api.us-east-1.amazonaws.com/eurovota-test/eurovota-api/login",
-        { usernameInput, password }
-      );
+      const response = await axios.post(`${apiBaseUrl}/login`, {
+        usernameInput,
+        password,
+      });
       const token = response.data.userId;
       login(token, usernameInput);
     } catch (error) {

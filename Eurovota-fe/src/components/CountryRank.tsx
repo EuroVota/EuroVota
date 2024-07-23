@@ -1,45 +1,42 @@
 import React from "react";
-import { countries } from "../assets/ParticipantList";
 
 interface Participant {
   id: number;
   position: number;
   name: string;
   votes: number;
+  code: string | undefined;
+  songId: string | undefined;
 }
 
-export const CountryRank: React.FC<Participant> = (participant) => {
-  const country = countries.find((country) => {
-    console.log(country, participant);
-    return country.country.toLowerCase() === participant.name.toLowerCase();
-  });
-
-  if (!country) {
-    return <div>Country not found for participant {participant.name}</div>;
-  }
-
+export const CountryRank: React.FC<{ participant: Participant }> = ({
+  participant,
+}) => {
   return (
-    <div className="country-rank flex items-center bg-white bg-opacity-80 p-4 rounded shadow-md">
-      <div className="rank-number text-3xl font-bold mr-4">
-        {participant.position}
+    <div className="country-rank flex items-center bg-white bg-opacity-80 p-8 rounded shadow-md">
+      <div className="rank-number text-6xl font-bold mr-4">
+        #{participant.position}
       </div>
       <iframe
-        // src={`https://open.spotify.com/embed/track/${country.songId}?utm_source=generator&theme=0`}
-        width="250"
-        height="152"
+        // src={`https://open.spotify.com/embed/track/${participant.songId}?utm_source=generator&theme=0`}
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-        style={{ borderRadius: "12px" }}
+        style={{
+          borderRadius: "12px",
+          width: 1200,
+          background: "black",
+          height: 152,
+        }}
       />
-      <div className="country-info flex items-center ml-4">
+      <div className="country-info flex items-center ml-4 p-4">
         <img
-          src={`https://flagsapi.com/${country.code}/flat/64.png`}
+          src={`https://flagsapi.com/${participant.code}/flat/64.png`}
           alt={`${participant.name} flag`}
-          className="h-16 w-16 rounded-lg mr-4"
+          className="h-20 w-20 rounded-lg mr-4"
         />
         <div>
-          <h3 className="text-xl font-bold">{participant.name}</h3>
-          <p className="text-gray-500">{participant.votes} votes</p>
+          <h3 className="text-2xl font-bold">{participant.name}</h3>
+          <p className="text-lg text-gray-500">{participant.votes} votes</p>
         </div>
       </div>
     </div>

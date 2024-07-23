@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 
 interface CountryProps {
@@ -10,8 +11,18 @@ interface CountryProps {
 }
 
 export const Country: React.FC<CountryProps> = ({ participant }) => {
-  const handleVote = (participantId: number) => {
-    console.log(`Voted for participant with id ${participantId}`);
+  const apiBaseUrl = import.meta.env.REACT_APP_API_BASE_URL;
+
+  const handleVote = async (country: string) => {
+    try {
+      const response = await axios.post(`${apiBaseUrl}/votes`, {
+        country,
+        votes: 10,
+      });
+      console.log("Vote submitted successfully:", response.data);
+    } catch (error) {
+      console.error("Error submitting vote:", error);
+    }
   };
 
   return (
@@ -28,7 +39,7 @@ export const Country: React.FC<CountryProps> = ({ participant }) => {
           <h1 className="text-4xl font-bold mb-4">{participant.country}</h1>
         </div>
         <button
-          onClick={() => handleVote(participant.id)}
+          onClick={() => handleVote(participant.country)}
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
         >
           Vote

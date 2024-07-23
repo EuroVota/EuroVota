@@ -12,8 +12,8 @@ export const App: React.FC = () => {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/voting" element={<VotingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<VotingPage />} />
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/verify" element={<VerificationForm />} />

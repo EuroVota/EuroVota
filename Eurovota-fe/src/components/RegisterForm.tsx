@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const RegisterForm: React.FC = () => {
+  const apiBaseUrl = import.meta.env.REACT_APP_API_BASE_URL;
+
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -20,10 +22,7 @@ export const RegisterForm: React.FC = () => {
     }
 
     try {
-      await axios.post(
-        "https://tekogg2e2a.execute-api.us-east-1.amazonaws.com/eurovota-test/eurovota-api/users  ",
-        { phone, password }
-      );
+      await axios.post(`${apiBaseUrl}/users`, { phone, password });
       navigate("/verify", { state: { phone } });
     } catch (error: any) {
       if (axios.isAxiosError(error) && error.response?.status === 409) {
