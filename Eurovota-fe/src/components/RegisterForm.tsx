@@ -34,11 +34,19 @@ export const RegisterForm: React.FC = () => {
   };
 
   const validatePassword = (password: string): boolean => {
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return regex.test(password);
-  };
+    const minLength = 8;
+    const maxLength = 128;
+    if (password.length < minLength || password.length > maxLength) {
+      return false;
+    }
 
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecial = /[@$!%*?&]/.test(password);
+
+    return hasUppercase && hasLowercase && hasNumber && hasSpecial;
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center">
       <form

@@ -4,7 +4,7 @@ import "../styles/background.css";
 import { useAuth } from "../contexts/AuthContext";
 
 export const Header: React.FC = () => {
-  const { userId } = useAuth();
+  const { idToken } = useAuth();
 
   return (
     <nav className="bg-heart p-8 sticky top-0">
@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
           >
             Ranking
           </Link>
-          {!userId && (
+          {!idToken && (
             <Link
               to="/login"
               className="text-white hover:text-gray-300 px-4 py-2 border border-white rounded-full"

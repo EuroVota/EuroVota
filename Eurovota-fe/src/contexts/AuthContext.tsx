@@ -7,7 +7,7 @@ import React, {
 } from "react";
 
 interface AuthContextProps {
-  userId: string | null;
+  idToken: string | null;
   username: string | null;
   login: (userId: string, username: string) => void;
   logout: () => void;
@@ -18,34 +18,34 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [userId, setUserId] = useState<string | null>(null);
+  const [idToken, setIdToken] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
+    const storedUserId = localStorage.getItem("idToken");
     const storedUsername = localStorage.getItem("username");
     if (storedUserId && storedUsername) {
-      setUserId(storedUserId);
+      setIdToken(storedUserId);
       setUsername(storedUsername);
     }
   }, []);
 
-  const login = (userId: string, username: string) => {
-    setUserId(userId);
+  const login = (idToken: string, username: string) => {
+    setIdToken(idToken);
     setUsername(username);
-    localStorage.setItem("userId", userId);
+    localStorage.setItem("idToken", idToken);
     localStorage.setItem("username", username);
   };
 
   const logout = () => {
-    setUserId(null);
+    setIdToken(null);
     setUsername(null);
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
   };
 
   return (
-    <AuthContext.Provider value={{ userId, username, login, logout }}>
+    <AuthContext.Provider value={{ idToken: idToken, username, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
