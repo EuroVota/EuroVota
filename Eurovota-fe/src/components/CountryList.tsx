@@ -1,42 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
-interface Participant {
-  id: number;
-  name: string;
-}
+import React from "react";
+import { Country } from "./Country";
+import { countries } from "../assets/ParticipantList";
 
 export const CountryList: React.FC = () => {
-  const [participants, setParticipants] = useState<Participant[]>([]);
-
-  useEffect(() => {
-    const fetchParticipants = async () => {
-      const response = await axios.get('/api/participants');
-      setParticipants(response.data);
-    };
-    fetchParticipants();
-  }, []);
-
-  const voteForParticipant = async (participantId: number) => {
-    const token = localStorage.getItem('token');
-    await axios.post(`/api/vote/${participantId}`, {}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  };
-
   return (
-    <div>
-      <h2>Participants</h2>
-      <ul>
-        {participants.map((participant) => (
-          <li key={participant.id}>
-            {participant.name} <button onClick={() => voteForParticipant(participant.id)}>Vote</button>
-          </li>
-        ))}
-      </ul>
+    <div className="flex justify-center items-center min-h-screen bg-transparent">
+      <div className="max-w-5xl mx-auto h-full p-8">
+        <h1 className="text-4xl font-bold text-white mb-4">
+          List of Countries
+        </h1>
+        <ul className="divide-y divide-gray-200">
+          {countries.map((participant) => (
+            <li key={participant.id} className="py-4">
+              <Country participant={participant} />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
-

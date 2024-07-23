@@ -1,12 +1,14 @@
-import React from 'react';
-import {CountryList} from '../components/CountryList';
+import React from "react";
+import { CountryList } from "../components/CountryList";
+
+import "../styles/background.css";
 
 export const VotingPage: React.FC = () => {
   return (
-    <div>
-      <h1>Voting</h1>
-      <CountryList />
+    <div className="voting-page">
+      <div className="voting-content">
+        <CountryList />
+      </div>
     </div>
   );
 };
-
