@@ -14,7 +14,7 @@ install: createDir deploy
 push-app:   build Build-DockerImage Tag-DockerImage login_aws Push-DockerImage
 push-app-amd64:   build Build-DockerImage-AMD64 Tag-DockerImage-AMD64 login_aws Push-DockerImage-AMD64
 
-push-app-multi:   build login_aws Push-DockerImage-Multi-to-AWS
+push-app-multi-aws:   build login_aws Push-DockerImage-Multi-to-AWS
 push-app-multi:   build login_aws Push-DockerImage-Multi-to-Docker_Hub
 
 
@@ -76,7 +76,7 @@ Push-DockerImage-Multi-to-AWS:
 	@echo "--------------------"
 	@echo "Building Docker image... amd64"
 	@echo "--------------------"
-	@docker buildx build --push -t ${aws_ecr_repo}/${appName}:multi --platform linux/amd64,linux/arm64 .
+	@docker buildx build --push -t ${aws_ecr_repo}/${appName}:latest --platform linux/amd64,linux/arm64 .
 
 Tag-DockerImage-AMD64:
 	@echo "--------------------"

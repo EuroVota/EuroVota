@@ -63,7 +63,7 @@ Push-DockerImage-Multi:
 	@echo "--------------------"
 	@echo "Building Docker image... amd64"
 	@echo "--------------------"
-	@docker buildx build --push -t ${aws_ecr_repo}/${appName}:multi --platform linux/amd64,linux/arm64 .
+	@docker buildx build --push -t ${aws_ecr_repo}/${appName}:latest --platform linux/amd64,linux/arm64 .
 
 Tag-DockerImage:
 	@echo "--------------------"
