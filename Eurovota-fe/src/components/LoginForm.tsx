@@ -14,9 +14,13 @@ export const LoginForm: React.FC = () => {
   if (userId) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center">
-        <div>
-          <h1>You are already logged in as: {username}</h1>
-          <Link to="/">Go to Home</Link>
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            You are already logged in as: {username}
+          </h1>
+          <Link to="/" className="text-blue-500 hover:underline">
+            Go to Home
+          </Link>
         </div>
       </div>
     );
