@@ -44,7 +44,9 @@ export const RankingList: React.FC = () => {
 
         setRanking(updatedParticipants);
       } catch (error) {
-        setError("Failed to load ranking. Please try again later.");
+        idToken
+          ? setError("Failed to load ranking. Please try again later.")
+          : setError("You need to log in to see the ranking");
       } finally {
         setLoading(false);
       }
@@ -59,7 +61,7 @@ export const RankingList: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center text-red-500">
+      <div className="min-h-screen flex items-center justify-center bg-side-bg bg-cover bg-center text-red-500 text-4xl">
         {error}
       </div>
     );
