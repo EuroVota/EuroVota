@@ -6,10 +6,10 @@ import React, {
   ReactNode,
 } from "react";
 
-interface AuthContextProps {
+export interface AuthContextProps {
   idToken: string | null;
   username: string | null;
-  login: (userId: string, username: string) => void;
+  login: (idToken: string, username: string) => void;
   logout: () => void;
 }
 
@@ -22,10 +22,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("idToken");
+    const storedIdToken = localStorage.getItem("idToken");
     const storedUsername = localStorage.getItem("username");
-    if (storedUserId && storedUsername) {
-      setIdToken(storedUserId);
+    if (storedIdToken && storedUsername) {
+      setIdToken(storedIdToken);
       setUsername(storedUsername);
     }
   }, []);
@@ -40,12 +40,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const logout = () => {
     setIdToken(null);
     setUsername(null);
-    localStorage.removeItem("userId");
+    localStorage.removeItem("idToken");
     localStorage.removeItem("username");
   };
 
   return (
-    <AuthContext.Provider value={{ idToken: idToken, username, login, logout }}>
+    <AuthContext.Provider value={{ idToken, username, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

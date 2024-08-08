@@ -57,14 +57,14 @@ export const Country: React.FC<CountryProps> = ({ participant }) => {
         <div className="flex-grow ml-4">
           <h1 className="text-4xl font-bold mb-4">{participant.country}</h1>
         </div>
-        {idToken ? (
+        {idToken && (
           <button
             onClick={() => handleVote(participant.country)}
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
           >
             Vote
           </button>
-        ) : null}
+        )}
       </div>
       <div className="bg-gray-800 mt-4 rounded-lg overflow-hidden">
         <iframe
